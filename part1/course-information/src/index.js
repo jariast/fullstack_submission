@@ -1,17 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = (props) => {
-  return <h1>{props.course.name}</h1>;
-};
+const Header = (props) => <h1>{props.course.name}</h1>;
 
-const Part = (props) => {
-  return (
-    <p>
-      {props.part.name} {props.part.exercises}
-    </p>
-  );
-};
+const Part = (props) => (
+  <p>
+    {props.part.name} {props.part.exercises}
+  </p>
+);
 
 const Content = (props) => {
   return (

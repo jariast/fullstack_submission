@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 const Button = ({ buttonLabel, clickHandler }) => (
   <button onClick={clickHandler}>{buttonLabel}</button>
 );
 
-const App = (props) => {
-  const buttonLabel = 'Click me for inspirational quotes!!!';
+const Votes = ({ votes }) => <h3>{`This anecdote has ${votes} votes.`}</h3>;
+
+const App = ({ anecdotes }) => {
+  const mainHeader = 'Anecdote of the day';
+  const mostVotedAnecdote = 'Most voted anecdote';
+  const randomAnecdoteBtnLabel = 'Click me for inspirational quotes!!!';
+  const voteBtnLabel = 'Vote!';
   const [selected, setSelected] = useState(0);
+  const [mostVotesIndex, setMostVotedIndex] = useState(0);
+  const [votes, setVote] = useState(Array(anecdotes.length).fill(0));
+
+  useEffect(() => {
+    findMostVoted();
+  });
 
   const randomInt = (min, max) => {
     min = Math.ceil(min);
@@ -23,15 +34,34 @@ const App = (props) => {
     return random;
   };
 
-  const handleClick = () => {
-    setSelected(generateDifferentRandomInt(0, props.anecdotes.length));
+  const handleRandomBtnClick = () => {
+    setSelected(generateDifferentRandomInt(0, anecdotes.length));
+  };
+
+  const handleVoteBtnClick = () => {
+    const copy = [...votes];
+    copy[selected] += 1;
+    setVote(copy);
+  };
+
+  const findMostVoted = () => {
+    const mostVotes = Math.max(...votes);
+    const mostVotedIndex = votes.findIndex((e) => e >= mostVotes);
+    setMostVotedIndex(mostVotedIndex);
   };
 
   return (
     <>
-      <h1>Anecdotes</h1>
-      <p>{props.anecdotes[selected]}</p>
-      <Button clickHandler={handleClick} buttonLabel={buttonLabel} />
+      <h1>{mainHeader}</h1>
+      <p>{anecdotes[selected]}</p>
+      <Button
+        clickHandler={handleRandomBtnClick}
+        buttonLabel={randomAnecdoteBtnLabel}
+      />
+      <Button clickHandler={handleVoteBtnClick} buttonLabel={voteBtnLabel} />
+      <Votes votes={votes[selected]} />
+      <h1>{mostVotedAnecdote}</h1>
+      <p>{anecdotes[mostVotesIndex]}</p>
     </>
   );
 };

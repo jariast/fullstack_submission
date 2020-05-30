@@ -1,5 +1,7 @@
 import React from 'react';
 
-const PersonDetails = ({ person }) => <p>{person.name}</p>;
+const PersonDetails = ({ person }) => (
+  <p>{`${person.name} /// ${person.number}`}</p>
+);
 
 export default PersonDetails;

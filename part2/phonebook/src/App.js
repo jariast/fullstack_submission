@@ -46,12 +46,20 @@ const App = () => {
   const handlePersonDeleteClick = (person) => {
     console.log('Deleting person :', person);
     if (window.confirm(`Do you really want to delete "${person.name}" info?`)) {
-      personsService.deletePerson(person.id).then(() => {
-        const newPersonsState = persons.filter((p) => p.id !== person.id);
-        setPersons(newPersonsState);
-        setFilteredPersons(newPersonsState);
-        showNotification(false, `"${person.name}" has been deleted`);
-      });
+      personsService
+        .deletePerson(person.id)
+        .then(() => {
+          const newPersonsState = persons.filter((p) => p.id !== person.id);
+          setPersons(newPersonsState);
+          setFilteredPersons(newPersonsState);
+          showNotification(false, `"${person.name}" has been deleted`);
+        })
+        .catch((error) => {
+          showNotification(
+            true,
+            `${person.name} no longer exists in the server.`
+          );
+        });
     }
   };
 
@@ -98,6 +106,12 @@ const App = () => {
           `"${modifiedPerson.name}" number has been updated.`
         );
         resetAppState(newPersonsState);
+      })
+      .catch((error) => {
+        showNotification(
+          true,
+          `${person.name} no longer exists in the server.`
+        );
       });
   };
 

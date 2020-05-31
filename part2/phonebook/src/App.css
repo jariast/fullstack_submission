@@ -1,0 +1,8 @@
+.personDetails {
+  display: flex;
+  align-items: center;
+}
+
+.personDetails button {
+  height: 20px;
+}

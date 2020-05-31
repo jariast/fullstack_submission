@@ -21,11 +21,6 @@
       "id": 4
     },
     {
-      "name": "test",
-      "number": "123",
-      "id": 5
-    },
-    {
       "name": "test01",
       "number": "12312",
       "id": 6
@@ -34,11 +29,6 @@
       "name": "camilo",
       "number": "456",
       "id": 7
-    },
-    {
-      "name": "asddf",
-      "number": "123123",
-      "id": 8
     }
   ]
 }

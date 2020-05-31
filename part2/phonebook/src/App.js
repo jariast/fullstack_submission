@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
+import './App.css';
 
 import PersonDetails from './components/PersonDetails';
 import Input from './components/Input';
@@ -38,6 +39,17 @@ const App = () => {
         person.name.toLowerCase().includes(filterString)
       )
     );
+  };
+
+  const handlePersonDeleteClick = (person) => {
+    console.log('Deleting person :', person);
+    if (window.confirm(`Do you really want to delete ${person.name} info?`)) {
+      personsService.deletePerson(person.id).then(() => {
+        const newPersonsState = persons.filter((p) => p.id !== person.id);
+        setPersons(newPersonsState);
+        setFilteredPersons(newPersonsState);
+      });
+    }
   };
 
   const addNewPerson = (event) => {
@@ -89,7 +101,11 @@ const App = () => {
         onChangeHandler={handleNewFilterChange}
       />
       {filteredPersons.map((person) => (
-        <PersonDetails key={person.name} person={person} />
+        <PersonDetails
+          key={person.name}
+          person={person}
+          clickHandler={() => handlePersonDeleteClick(person)}
+        />
       ))}
     </div>
   );

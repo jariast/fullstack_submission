@@ -5,6 +5,7 @@ import './app.css';
 
 import Filter from './components/Filter';
 import CountryDetails from './components/CountryDetails';
+import CountryItem from './components/CountryItem';
 
 function App() {
   const filterLbl = 'Find countries by name';
@@ -21,6 +22,10 @@ function App() {
   };
   useEffect(hook, []);
 
+  const handleShowCountryDetailClick = (country) => {
+    setContentHtml(<CountryDetails country={country} />);
+  };
+
   const handleFilterChange = (event) => {
     const inputValue = event.target.value;
     setFilter(inputValue);
@@ -36,7 +41,13 @@ function App() {
       return;
     } else if (filteredList.length > 1) {
       setContentHtml(
-        filteredList.map((country) => <p key={country.name}>{country.name}</p>)
+        filteredList.map((country) => (
+          <CountryItem
+            key={country.name}
+            country={country}
+            clickHandler={() => handleShowCountryDetailClick(country)}
+          />
+        ))
       );
     } else if (filteredList.length === 1) {
       setContentHtml(<CountryDetails country={filteredList[0]} />);

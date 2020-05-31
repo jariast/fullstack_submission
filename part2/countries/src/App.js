@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import './app.css';
+
 import Filter from './components/Filter';
+import CountryDetails from './components/CountryDetails';
 
 function App() {
   const filterLbl = 'Find countries by name';
@@ -9,7 +12,7 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [filter, setFilter] = useState('');
-  const [showWarning, setShowWarning] = useState(false);
+  const [contentHtml, setContentHtml] = useState();
 
   const hook = () => {
     axios
@@ -29,11 +32,18 @@ function App() {
       country.name.toLowerCase().includes(filterString)
     );
     if (filteredList.length >= 10) {
-      setShowWarning(true);
+      setContentHtml(<p>{tooManyMatchesWarning}</p>);
       return;
+    } else if (filteredList.length > 1) {
+      setContentHtml(
+        filteredList.map((country) => <p key={country.name}>{country.name}</p>)
+      );
+    } else if (filteredList.length === 1) {
+      setContentHtml(<CountryDetails country={filteredList[0]} />);
+    } else {
+      setContentHtml('');
     }
     setFilteredCountries(filteredList);
-    setShowWarning(false);
   };
 
   return (
@@ -43,19 +53,7 @@ function App() {
         inputValue={filter}
         onChangeHandler={handleFilterChange}
       />
-      {/* {showWarning ? (
-        <p>{tooManyMatchesWarning}</p>
-      ) : (
-        filteredCountries.map((country) => (
-          <p key={country.name}>{country.name}</p>
-        ))
-      )} */}
-
-      {showWarning && <p>{tooManyMatchesWarning}</p>}
-      {!showWarning &&
-        filteredCountries.map((country) => (
-          <p key={country.name}>{country.name}</p>
-        ))}
+      {contentHtml}
     </div>
   );
 }

@@ -35,8 +35,12 @@ function App() {
         },
       })
       .then((response) => {
-        selectedCountry.weatherData = response.data.current;
-        setContentHtml(<CountryDetails country={selectedCountry} />);
+        setContentHtml(
+          <CountryDetails
+            country={selectedCountry}
+            weatherData={response.data.current}
+          />
+        );
       });
   };
   useEffect(selectredCountryHook, [selectedCountry]);

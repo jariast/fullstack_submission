@@ -1,0 +1,12 @@
+img {
+  height: 200px;
+}
+
+.country-item {
+  display: flex;
+  align-items: center;
+}
+
+.country-item button {
+  height: 20px;
+}

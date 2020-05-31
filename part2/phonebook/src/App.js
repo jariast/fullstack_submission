@@ -5,6 +5,7 @@ import './App.css';
 import PersonDetails from './components/PersonDetails';
 import Input from './components/Input';
 import Filter from './components/Filter';
+import Notification from './components/Notification';
 import personsService from './services/persons';
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [newFilter, setNewFilter] = useState('');
+  const [notification, setNotification] = useState({});
   const [filteredPersons, setFilteredPersons] = useState(persons);
 
   const hook = () => {
@@ -48,6 +50,7 @@ const App = () => {
         const newPersonsState = persons.filter((p) => p.id !== person.id);
         setPersons(newPersonsState);
         setFilteredPersons(newPersonsState);
+        showNotification(false, `"${person.name}" has been deleted`);
       });
     }
   };
@@ -75,6 +78,7 @@ const App = () => {
 
     personsService.createPerson(newPerson).then((newPerson) => {
       const newPersonsObj = persons.concat(newPerson);
+      showNotification(false, `"${newPerson.name}" has been created`);
       resetAppState(newPersonsObj);
     });
   };
@@ -89,6 +93,10 @@ const App = () => {
         const newPersonsState = persons.map((p) =>
           p.id !== person.id ? p : modifiedPerson
         );
+        showNotification(
+          false,
+          `"${modifiedPerson.name}" number has been updated.`
+        );
         resetAppState(newPersonsState);
       });
   };
@@ -101,9 +109,17 @@ const App = () => {
     setNewFilter('');
   };
 
+  const showNotification = (isError, message) => {
+    setNotification({ isError, message });
+    setTimeout(() => {
+      setNotification({});
+    }, 2000);
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification} />
       <form onSubmit={handleFormSubmit}>
         <div>
           <Input

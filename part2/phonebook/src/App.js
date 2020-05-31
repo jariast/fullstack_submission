@@ -4,6 +4,7 @@ import axios from 'axios';
 import PersonDetails from './components/PersonDetails';
 import Input from './components/Input';
 import Filter from './components/Filter';
+import personsService from './services/persons';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,10 +14,9 @@ const App = () => {
   const [filteredPersons, setFilteredPersons] = useState(persons);
 
   const hook = () => {
-    axios.get('http://localhost:3001/persons').then((response) => {
-      console.log('res ', response);
-      setPersons(response.data);
-      setFilteredPersons(response.data);
+    personsService.getAllPersons().then((persons) => {
+      setPersons(persons);
+      setFilteredPersons(persons);
     });
   };
 
@@ -51,12 +51,15 @@ const App = () => {
       name: newName,
       number: newNumber,
     };
-    const newPersonsObj = persons.concat(newPerson);
-    setPersons(newPersonsObj);
-    setNewName('');
-    setNewNumber('');
-    setFilteredPersons(newPersonsObj);
-    setNewFilter('');
+
+    personsService.createPerson(newPerson).then((newPerson) => {
+      const newPersonsObj = persons.concat(newPerson);
+      setPersons(newPersonsObj);
+      setNewName('');
+      setNewNumber('');
+      setFilteredPersons(newPersonsObj);
+      setNewFilter('');
+    });
   };
 
   return (

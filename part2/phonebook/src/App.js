@@ -43,7 +43,7 @@ const App = () => {
 
   const handlePersonDeleteClick = (person) => {
     console.log('Deleting person :', person);
-    if (window.confirm(`Do you really want to delete ${person.name} info?`)) {
+    if (window.confirm(`Do you really want to delete "${person.name}" info?`)) {
       personsService.deletePerson(person.id).then(() => {
         const newPersonsState = persons.filter((p) => p.id !== person.id);
         setPersons(newPersonsState);
@@ -52,13 +52,22 @@ const App = () => {
     }
   };
 
-  const addNewPerson = (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
     const isDuplicateEntry = persons.some((person) => person.name === newName);
     if (isDuplicateEntry) {
-      alert(`"${newName}" already exists, please use another name.`);
-      return;
+      const shouldUpdateEntry = window.confirm(
+        `"${newName}" already exists, do you want to update the phone number?`
+      );
+      if (shouldUpdateEntry) {
+        updatePerson(newName);
+      }
+    } else {
+      createPerson();
     }
+  };
+
+  const createPerson = () => {
     const newPerson = {
       name: newName,
       number: newNumber,
@@ -66,18 +75,36 @@ const App = () => {
 
     personsService.createPerson(newPerson).then((newPerson) => {
       const newPersonsObj = persons.concat(newPerson);
-      setPersons(newPersonsObj);
-      setNewName('');
-      setNewNumber('');
-      setFilteredPersons(newPersonsObj);
-      setNewFilter('');
+      resetAppState(newPersonsObj);
     });
+  };
+
+  const updatePerson = (newName) => {
+    const person = persons.find((person) => person.name === newName);
+    const changedPerson = { ...person, number: newNumber };
+
+    personsService
+      .updatePerson(person.id, changedPerson)
+      .then((modifiedPerson) => {
+        const newPersonsState = persons.map((p) =>
+          p.id !== person.id ? p : modifiedPerson
+        );
+        resetAppState(newPersonsState);
+      });
+  };
+
+  const resetAppState = (newPersonsState) => {
+    setPersons(newPersonsState);
+    setFilteredPersons(newPersonsState);
+    setNewName('');
+    setNewNumber('');
+    setNewFilter('');
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addNewPerson}>
+      <form onSubmit={handleFormSubmit}>
         <div>
           <Input
             label="name"
@@ -102,7 +129,7 @@ const App = () => {
       />
       {filteredPersons.map((person) => (
         <PersonDetails
-          key={person.name}
+          key={person.id}
           person={person}
           clickHandler={() => handlePersonDeleteClick(person)}
         />

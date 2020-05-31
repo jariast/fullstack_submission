@@ -10,9 +10,10 @@ import CountryItem from './components/CountryItem';
 function App() {
   const filterLbl = 'Find countries by name';
   const tooManyMatchesWarning = 'Too many matches, please narrow your filter.';
+  const loadingInfoWarning = 'Loading country data, please wait.';
   const [countries, setCountries] = useState([]);
-  const [filteredCountries, setFilteredCountries] = useState([]);
   const [filter, setFilter] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('');
   const [contentHtml, setContentHtml] = useState();
 
   const hook = () => {
@@ -22,8 +23,27 @@ function App() {
   };
   useEffect(hook, []);
 
+  const selectredCountryHook = () => {
+    if (!selectedCountry) {
+      return;
+    }
+    axios
+      .get('http://api.weatherstack.com/current', {
+        params: {
+          access_key: process.env.REACT_APP_API_KEY,
+          query: selectedCountry.name,
+        },
+      })
+      .then((response) => {
+        selectedCountry.weatherData = response.data.current;
+        setContentHtml(<CountryDetails country={selectedCountry} />);
+      });
+  };
+  useEffect(selectredCountryHook, [selectedCountry]);
+
   const handleShowCountryDetailClick = (country) => {
-    setContentHtml(<CountryDetails country={country} />);
+    setSelectedCountry(country);
+    setContentHtml(<p>{loadingInfoWarning}</p>);
   };
 
   const handleFilterChange = (event) => {
@@ -50,11 +70,11 @@ function App() {
         ))
       );
     } else if (filteredList.length === 1) {
-      setContentHtml(<CountryDetails country={filteredList[0]} />);
+      setSelectedCountry(filteredList[0]);
+      setContentHtml(<p>{loadingInfoWarning}</p>);
     } else {
       setContentHtml('');
     }
-    setFilteredCountries(filteredList);
   };
 
   return (

@@ -8,8 +8,6 @@ import Filter from './components/Filter';
 import Notification from './components/Notification';
 import personsService from './services/persons';
 
-console.log('Environment: ', process.env.NODE_ENV);
-
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
@@ -86,11 +84,14 @@ const App = () => {
       number: newNumber,
     };
 
-    personsService.createPerson(newPerson).then((newPerson) => {
-      const newPersonsObj = persons.concat(newPerson);
-      showNotification(false, `"${newPerson.name}" has been created`);
-      resetAppState(newPersonsObj);
-    });
+    personsService
+      .createPerson(newPerson)
+      .then((newPerson) => {
+        const newPersonsObj = persons.concat(newPerson);
+        showNotification(false, `"${newPerson.name}" has been created`);
+        resetAppState(newPersonsObj);
+      })
+      .catch((error) => showNotification(true, error.response.data.error));
   };
 
   const updatePerson = (newName) => {
@@ -110,10 +111,7 @@ const App = () => {
         resetAppState(newPersonsState);
       })
       .catch((error) => {
-        showNotification(
-          true,
-          `${person.name} no longer exists in the server.`
-        );
+        showNotification(true, error.response.data.error);
       });
   };
 
@@ -129,7 +127,7 @@ const App = () => {
     setNotification({ isError, message });
     setTimeout(() => {
       setNotification({});
-    }, 2000);
+    }, 5000);
   };
 
   return (

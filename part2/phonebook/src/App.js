@@ -8,6 +8,8 @@ import Filter from './components/Filter';
 import Notification from './components/Notification';
 import personsService from './services/persons';
 
+console.log('Environment: ', process.env.NODE_ENV);
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');

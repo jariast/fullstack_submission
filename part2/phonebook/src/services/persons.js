@@ -1,5 +1,6 @@
 import axios from 'axios';
-const baseUrl = '/api/persons';
+import { config } from '../envConstants';
+const baseUrl = config.API_URL;
 
 const getAllPersons = () => {
   const request = axios.get(baseUrl);

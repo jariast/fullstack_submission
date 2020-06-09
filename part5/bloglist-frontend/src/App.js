@@ -5,6 +5,7 @@ import './App.css';
 import Blog from './components/Blog';
 import LoginForm from './components/LoginForm';
 import UserInfo from './components/UserInfo';
+import NewBlogForm from './components/NewBlogForm';
 import Notification from './components/Notification';
 
 import blogService from './services/blogs';
@@ -15,6 +16,9 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState({});
+  const [author, setAuthor] = useState('');
+  const [title, setTitle] = useState('');
+  const [url, setUrl] = useState('');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -26,12 +30,22 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
+      blogService.setToken(user.token);
     }
   }, []);
 
   const blogList = () => (
     <div>
       <UserInfo name={user.name} logoutClickHandler={handleLogout}></UserInfo>
+      <NewBlogForm
+        title={title}
+        author={author}
+        url={url}
+        submissionHandler={handleBlogCreation}
+        titleChangeHandler={({ target }) => setTitle(target.value)}
+        authorChangeHandler={({ target }) => setAuthor(target.value)}
+        urlChangeHandler={({ target }) => setUrl(target.value)}
+      ></NewBlogForm>
       <h2>Blogs!</h2>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
@@ -55,6 +69,22 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogAppUser');
     setUser(null);
+    blogService.setToken(null);
+  };
+
+  const handleBlogCreation = async (event) => {
+    event.preventDefault();
+    const newBlogObj = { title, author, url };
+    try {
+      const newBlog = await blogService.create(newBlogObj);
+      setBlogs(blogs.concat(newBlog));
+      showNotification(false, `"${newBlog.title}" has been created`);
+      setTitle('');
+      setAuthor('');
+      setUrl('');
+    } catch (error) {
+      showNotification(true, 'Error in blog creation');
+    }
   };
 
   const showNotification = (isError, message) => {

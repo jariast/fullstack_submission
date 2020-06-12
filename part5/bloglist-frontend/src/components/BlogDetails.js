@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const BlogDetails = ({ blog, likeClickHandler, removeClickHandler }) => (
   <>
@@ -9,5 +10,11 @@ const BlogDetails = ({ blog, likeClickHandler, removeClickHandler }) => (
     <button onClick={() => removeClickHandler(blog)}>Remove</button>
   </>
 );
+
+BlogDetails.propTypes = {
+  blog: PropTypes.object.isRequired,
+  likeClickHandler: PropTypes.func.isRequired,
+  removeClickHandler: PropTypes.func.isRequired,
+};
 
 export default BlogDetails;

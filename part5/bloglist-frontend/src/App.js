@@ -41,7 +41,7 @@ const App = () => {
 
       <h2>Blogs!</h2>
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog blogUpdateHandler={handleBlogUpdate} key={blog.id} blog={blog} />
       ))}
     </div>
   );
@@ -72,6 +72,22 @@ const App = () => {
       showNotification(false, `"${newBlog.title}" has been created`);
     } catch (error) {
       showNotification(true, 'Error in blog creation');
+    }
+  };
+
+  const handleBlogUpdate = async (updatedBlogObj) => {
+    try {
+      const updatedBlogRes = await blogService.update(updatedBlogObj);
+
+      const modifiedBlog = blogs.find((blog) => blog.id === updatedBlogRes.id);
+      modifiedBlog.likes = updatedBlogRes.likes;
+      const newBlogsState = blogs.map((b) =>
+        b.id === modifiedBlog.id ? modifiedBlog : b
+      );
+      setBlogs(newBlogsState);
+      showNotification(false, `"${modifiedBlog.title} liked."`);
+    } catch (error) {
+      showNotification(true, 'Error updating blog');
     }
   };
 

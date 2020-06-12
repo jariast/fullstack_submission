@@ -1,10 +1,10 @@
 import React from 'react';
 
-const BlogDetails = ({ blog }) => (
+const BlogDetails = ({ blog, clickHandler }) => (
   <>
     <p>{blog.url}</p>
     <p>{blog.likes}</p>
-    <button>Like</button>
+    <button onClick={() => clickHandler(blog)}>Like</button>
     <p>{blog.user.name}</p>
   </>
 );

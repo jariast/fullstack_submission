@@ -20,7 +20,10 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    blogService.getAll().then((blogs) => {
+      const sortedBlogsByLikes = blogs.sort((a, b) => b.likes - a.likes);
+      setBlogs(sortedBlogsByLikes);
+    });
   }, []);
 
   useEffect(() => {
@@ -81,9 +84,9 @@ const App = () => {
 
       const modifiedBlog = blogs.find((blog) => blog.id === updatedBlogRes.id);
       modifiedBlog.likes = updatedBlogRes.likes;
-      const newBlogsState = blogs.map((b) =>
-        b.id === modifiedBlog.id ? modifiedBlog : b
-      );
+      const newBlogsState = blogs
+        .map((b) => (b.id === modifiedBlog.id ? modifiedBlog : b))
+        .sort((a, b) => b.likes - a.likes); //Note that the map function returns a new array
       setBlogs(newBlogsState);
       showNotification(false, `"${modifiedBlog.title} liked."`);
     } catch (error) {

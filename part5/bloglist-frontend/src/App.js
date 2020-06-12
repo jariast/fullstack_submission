@@ -44,7 +44,12 @@ const App = () => {
 
       <h2>Blogs!</h2>
       {blogs.map((blog) => (
-        <Blog blogUpdateHandler={handleBlogUpdate} key={blog.id} blog={blog} />
+        <Blog
+          blogUpdateHandler={handleBlogUpdate}
+          removeClickHandler={handleBlogDelete}
+          key={blog.id}
+          blog={blog}
+        />
       ))}
     </div>
   );
@@ -91,6 +96,23 @@ const App = () => {
       showNotification(false, `"${modifiedBlog.title} liked."`);
     } catch (error) {
       showNotification(true, 'Error updating blog');
+    }
+  };
+
+  const handleBlogDelete = async (blog) => {
+    if (
+      window.confirm(
+        `Do you really want to delete "${blog.title}" by ${blog.author} info?`
+      )
+    ) {
+      try {
+        await blogService.deleteBlog(blog.id);
+        const newBlogsState = blogs.filter((b) => b.id !== blog.id);
+        setBlogs(newBlogsState);
+        showNotification(false, `${blog.title} has been deleted`);
+      } catch (error) {
+        showNotification(true, 'Error deleting blog');
+      }
     }
   };
 

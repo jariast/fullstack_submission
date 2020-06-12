@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import BlogDetails from './BlogDetails';
 
-const Blog = ({ blog, blogUpdateHandler }) => {
+const Blog = ({ blog, blogUpdateHandler, removeClickHandler }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -30,7 +30,8 @@ const Blog = ({ blog, blogUpdateHandler }) => {
       {visibleDetails && (
         <BlogDetails
           blog={blog}
-          clickHandler={handleBlogLikeClick}
+          likeClickHandler={handleBlogLikeClick}
+          removeClickHandler={removeClickHandler}
         ></BlogDetails>
       )}
     </div>

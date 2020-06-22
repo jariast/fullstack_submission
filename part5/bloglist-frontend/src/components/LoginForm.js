@@ -11,7 +11,7 @@ const LoginForm = ({
     <h1>Login into the app</h1>
     <form onSubmit={submissionHandler}>
       <div className="form-group">
-        <label for="username">
+        <label htmlFor="username">
           Username
           <input
             className="form-control"
@@ -22,8 +22,8 @@ const LoginForm = ({
           ></input>
         </label>
       </div>
-      <div class="form-group">
-        <label for="password">
+      <div className="form-group">
+        <label htmlFor="password">
           Password
           <input
             id="password"

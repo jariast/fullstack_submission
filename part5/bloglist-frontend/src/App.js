@@ -43,14 +43,16 @@ const App = () => {
       </Toggable>
 
       <h2>Blogs!</h2>
-      {blogs.map((blog) => (
-        <Blog
-          blogUpdateHandler={handleBlogUpdate}
-          removeClickHandler={handleBlogDelete}
-          key={blog.id}
-          blog={blog}
-        />
-      ))}
+      <ul className="list-group">
+        {blogs.map((blog) => (
+          <Blog
+            blogUpdateHandler={handleBlogUpdate}
+            removeClickHandler={handleBlogDelete}
+            key={blog.id}
+            blog={blog}
+          />
+        ))}
+      </ul>
     </>
   );
 
@@ -124,7 +126,7 @@ const App = () => {
   };
 
   return (
-    <div class="container">
+    <div className="container">
       <Notification notification={notification} />
       {user === null ? (
         <LoginForm

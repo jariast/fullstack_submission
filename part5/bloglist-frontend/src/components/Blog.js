@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import BlogDetails from './BlogDetails';
 
 const Blog = ({ blog, blogUpdateHandler, removeClickHandler }) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-  };
+  // const blogStyle = {
+  //   paddingTop: 10,
+  //   paddingLeft: 2,
+  //   border: 'solid',
+  //   borderWidth: 1,
+  //   marginBottom: 5,
+  // };
   const [visibleDetails, setVisibleDetails] = useState(false);
 
   const handleBlogLikeClick = (blog) => {
@@ -22,11 +22,19 @@ const Blog = ({ blog, blogUpdateHandler, removeClickHandler }) => {
   };
 
   return (
-    <div style={blogStyle} className="blog">
-      {blog.title} -- By: {blog.author}
-      <button onClick={() => setVisibleDetails(!visibleDetails)}>
-        {visibleDetails ? 'Hide' : 'View'}
-      </button>
+    <li className="list-group-item w-50">
+      <div className="d-flex w-100 justify-content-between align-items-center">
+        <h5>
+          {blog.title} -- By: {blog.author}
+        </h5>
+        <button
+          className="btn btn-outline-info"
+          onClick={() => setVisibleDetails(!visibleDetails)}
+        >
+          {visibleDetails ? 'Hide' : 'View'}
+        </button>
+      </div>
+
       {visibleDetails && (
         <BlogDetails
           blog={blog}
@@ -34,7 +42,7 @@ const Blog = ({ blog, blogUpdateHandler, removeClickHandler }) => {
           removeClickHandler={removeClickHandler}
         ></BlogDetails>
       )}
-    </div>
+    </li>
   );
 };
 

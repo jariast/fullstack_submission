@@ -7,6 +7,7 @@ const BlogDetails = ({ blog, likeClickHandler, removeClickHandler }) => (
     <div className="d-flex w-50 align-items-center">
       <span data-testid="blog-likes">Likes: {blog.likes}</span>
       <button
+        data-testid="like-button"
         className="btn btn-success"
         onClick={() => likeClickHandler(blog)}
       >

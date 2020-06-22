@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Togglable = (props) => {
+const Toggable = (props) => {
   const [visible, setVisible] = useState(false);
 
   const hideWhenVisible = { display: visible ? 'none' : '' };
@@ -23,4 +23,4 @@ const Togglable = (props) => {
   );
 };
 
-export default Togglable;
+export default Toggable;

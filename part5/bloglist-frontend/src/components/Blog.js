@@ -22,7 +22,7 @@ const Blog = ({ blog, blogUpdateHandler, removeClickHandler }) => {
   };
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       {blog.title} -- By: {blog.author}
       <button onClick={() => setVisibleDetails(!visibleDetails)}>
         {visibleDetails ? 'Hide' : 'View'}

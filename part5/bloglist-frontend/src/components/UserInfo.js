@@ -1,9 +1,14 @@
 import React from 'react';
 
 const UserInfo = ({ name, logoutClickHandler }) => (
-  <div>
-    <p>{name} is logged in!</p>
-    <button onClick={logoutClickHandler}>Log Out</button>
+  <div className="row">
+    <p className="col-11 align-self-center">{name} is logged in!</p>
+    <button
+      className="btn btn-link col align-self-center"
+      onClick={logoutClickHandler}
+    >
+      Log Out
+    </button>
   </div>
 );
 

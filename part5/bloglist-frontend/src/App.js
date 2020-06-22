@@ -36,7 +36,7 @@ const App = () => {
   }, []);
 
   const blogList = () => (
-    <div>
+    <>
       <UserInfo name={user.name} logoutClickHandler={handleLogout} />
       <Toggable buttonLabel="New Note">
         <NewBlogForm handleBlogCreation={handleBlogCreation} />
@@ -51,7 +51,7 @@ const App = () => {
           blog={blog}
         />
       ))}
-    </div>
+    </>
   );
 
   const handleLogin = async (event) => {
@@ -124,7 +124,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div class="container">
       <Notification notification={notification} />
       {user === null ? (
         <LoginForm

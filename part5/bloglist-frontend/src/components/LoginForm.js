@@ -10,16 +10,24 @@ const LoginForm = ({
   <>
     <h1>Login into the app</h1>
     <form onSubmit={submissionHandler}>
-      <div>
-        <label>
+      <div className="form-group">
+        <label for="username">
           Username
-          <input required value={username} onChange={userChangeHandler}></input>
+          <input
+            className="form-control"
+            id="username"
+            required
+            value={username}
+            onChange={userChangeHandler}
+          ></input>
         </label>
       </div>
-      <div>
-        <label>
+      <div class="form-group">
+        <label for="password">
           Password
           <input
+            id="password"
+            className="form-control"
             required
             type="password"
             value={password}
@@ -28,7 +36,9 @@ const LoginForm = ({
         </label>
       </div>
       <div>
-        <button type="submit">Login</button>
+        <button className="btn btn-primary" type="submit">
+          Login
+        </button>
       </div>
     </form>
   </>

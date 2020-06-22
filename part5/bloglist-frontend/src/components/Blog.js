@@ -3,13 +3,6 @@ import React, { useState } from 'react';
 import BlogDetails from './BlogDetails';
 
 const Blog = ({ blog, blogUpdateHandler, removeClickHandler }) => {
-  // const blogStyle = {
-  //   paddingTop: 10,
-  //   paddingLeft: 2,
-  //   border: 'solid',
-  //   borderWidth: 1,
-  //   marginBottom: 5,
-  // };
   const [visibleDetails, setVisibleDetails] = useState(false);
 
   const handleBlogLikeClick = (blog) => {

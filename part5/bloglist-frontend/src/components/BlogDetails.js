@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 const BlogDetails = ({ blog, likeClickHandler, removeClickHandler }) => (
   <div data-testid="blog-details" className="d-flex flex-column">
-    <p>URL: {blog.url}</p>
+    <p data-testid="blog-url">URL: {blog.url}</p>
     <div className="d-flex w-50 align-items-center">
-      <span>Likes: {blog.likes}</span>
+      <span data-testid="blog-likes">Likes: {blog.likes}</span>
       <button
         className="btn btn-success"
         onClick={() => likeClickHandler(blog)}

@@ -38,7 +38,7 @@ const App = () => {
   const blogList = () => (
     <>
       <UserInfo name={user.name} logoutClickHandler={handleLogout} />
-      <Toggable buttonLabel="New Note">
+      <Toggable buttonLabel="New Blog">
         <NewBlogForm handleBlogCreation={handleBlogCreation} />
       </Toggable>
 

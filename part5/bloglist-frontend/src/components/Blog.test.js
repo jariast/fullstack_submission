@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render } from '@testing-library/react';
+import { render, queryByTestId } from '@testing-library/react';
 import Blog from './Blog';
 
 test('renders only Blog Name and Author', () => {
@@ -24,4 +24,7 @@ test('renders only Blog Name and Author', () => {
   expect(component.container).toHaveTextContent(
     'Blog with token auth middleware 001 -- By: RomilaView'
   );
+  expect(
+    queryByTestId(document.documentElement, 'blog-details')
+  ).not.toBeInTheDocument();
 });

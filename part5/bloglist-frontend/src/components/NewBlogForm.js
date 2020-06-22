@@ -17,38 +17,46 @@ const NewBlogForm = ({ handleBlogCreation }) => {
     <>
       <h1>Create New Blog</h1>
       <form onSubmit={handleSubmission}>
-        <div>
-          <label>
+        <div className="form-group">
+          <label for="title">
             Title
             <input
+              id="title"
+              className="form-control"
               required
               value={title}
               onChange={({ target }) => setTitle(target.value)}
             ></input>
           </label>
         </div>
-        <div>
-          <label>
+        <div className="form-group">
+          <label for="author">
             Author
             <input
+              id="author"
+              className="form-control"
               required
               value={author}
               onChange={({ target }) => setAuthor(target.value)}
             ></input>
           </label>
         </div>
-        <div>
+        <div className="form-group">
           <label>
             URL
             <input
+              id="url"
+              className="form-control"
               required
               value={url}
               onChange={({ target }) => setUrl(target.value)}
             ></input>
           </label>
         </div>
-        <div>
-          <button type="submit">Create</button>
+        <div className="form-group">
+          <button className="btn btn-success" type="submit">
+            Create
+          </button>
         </div>
       </form>
     </>

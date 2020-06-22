@@ -11,13 +11,17 @@ const Toggable = (props) => {
   };
 
   return (
-    <div>
-      <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+    <div className="row">
+      <div className="col" style={hideWhenVisible}>
+        <button className="btn btn-success" onClick={toggleVisibility}>
+          {props.buttonLabel}
+        </button>
       </div>
-      <div style={showWhenVisible}>
+      <div className="col" style={showWhenVisible}>
+        <button className="btn btn-info" onClick={toggleVisibility}>
+          Cancel
+        </button>
         {props.children}
-        <button onClick={toggleVisibility}>cancel</button>
       </div>
     </div>
   );

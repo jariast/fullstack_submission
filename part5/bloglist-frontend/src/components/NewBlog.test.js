@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, queryByTestId, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import NewBlogForm from './NewBlogForm';
 
 test('New Blog Form calls onSubmit correctly', () => {

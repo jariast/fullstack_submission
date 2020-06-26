@@ -15,7 +15,7 @@ const Notification = ({ notification }) => {
       style={{ position: 'absolute', top: 0, right: 0, zIndex: 1 }}
     >
       <div className="toast-header">
-        <strong className="mr-auto">
+        <strong className="mr-auto" data-cy="toast-header">
           {notification.isError ? 'Error' : 'Success!'}
         </strong>
       </div>

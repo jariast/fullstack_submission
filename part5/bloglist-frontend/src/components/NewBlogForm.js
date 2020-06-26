@@ -54,7 +54,7 @@ const NewBlogForm = ({ handleBlogCreation }) => {
           </label>
         </div>
         <div className="form-group">
-          <button className="btn btn-success" type="submit">
+          <button className="btn btn-success" data-cy="submit" type="submit">
             Create
           </button>
         </div>

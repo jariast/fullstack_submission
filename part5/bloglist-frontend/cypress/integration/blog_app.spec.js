@@ -35,7 +35,7 @@ describe('Blog App', function () {
       cy.login({ username: 'camono', password: '123456' });
     });
 
-    it.only('User can create new blog', function () {
+    it('User can create new blog', function () {
       cy.contains('New Blog').click();
       cy.get('#title').type('New Blog Title');
       cy.get('#author').type('Arquimedes');
@@ -44,6 +44,20 @@ describe('Blog App', function () {
 
       cy.get('#title').should('not.contain.text', 'New Blog title');
       cy.get('[data-cy=toast-header]').contains('Success');
+    });
+
+    describe('And a note exists', function () {
+      beforeEach(function () {
+        cy.createBlog({
+          author: 'New Author',
+          title: 'New Title',
+          url: 'newUrl.com',
+        });
+      });
+
+      it('User can like a blog', function () {
+        // cy.con
+      });
     });
   });
 });

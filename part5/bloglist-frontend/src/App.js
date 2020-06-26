@@ -42,7 +42,7 @@ const App = () => {
         <NewBlogForm handleBlogCreation={handleBlogCreation} />
       </Toggable>
 
-      <h2>Blogs!</h2>
+      <h2 className="header">Blogs!</h2>
       <ul className="list-group">
         {blogs.map((blog) => (
           <Blog

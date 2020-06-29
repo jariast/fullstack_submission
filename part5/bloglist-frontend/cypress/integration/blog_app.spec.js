@@ -55,8 +55,11 @@ describe('Blog App', function () {
         });
       });
 
-      it('User can like a blog', function () {
-        // cy.con
+      it.only('User can like a blog', function () {
+        cy.get('[data-cy=view-details-btn]').click();
+        cy.get('[data-cy=view-details-btn]').should('contain.text', 'Hide');
+        cy.get('[data-cy=like-btn]').click();
+        cy.get('[data-testid=blog-details]').contains('Likes: 1');
       });
     });
   });

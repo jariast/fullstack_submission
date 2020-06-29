@@ -21,6 +21,7 @@ const Blog = ({ blog, blogUpdateHandler, removeClickHandler }) => {
           {blog.title} -- By: {blog.author}
         </h5>
         <button
+          data-cy="view-details-btn"
           className="btn btn-outline-info"
           onClick={() => setVisibleDetails(!visibleDetails)}
         >

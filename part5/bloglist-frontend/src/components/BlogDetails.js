@@ -10,6 +10,7 @@ const BlogDetails = ({ blog, likeClickHandler, removeClickHandler }) => (
         data-testid="like-button"
         className="btn btn-success"
         onClick={() => likeClickHandler(blog)}
+        data-cy="like-btn"
       >
         Like
       </button>

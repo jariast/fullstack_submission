@@ -15,7 +15,7 @@ const Blog = ({ blog, blogUpdateHandler, removeClickHandler }) => {
   };
 
   return (
-    <li className="list-group-item w-50">
+    <li className="list-group-item w-50 blog">
       <div className="d-flex w-100 justify-content-between align-items-center">
         <h5>
           {blog.title} -- By: {blog.author}

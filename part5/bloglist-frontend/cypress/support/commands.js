@@ -34,16 +34,15 @@ Cypress.Commands.add('login', ({ username, password }) => {
   });
 });
 
-Cypress.Commands.add('createBlog', ({ author, title, url }) => {
+Cypress.Commands.add('createBlog', ({ author, title, url, likes }) => {
   cy.request({
     url: `${Cypress.env('BASE_API_URL')}/blogs`,
     method: 'POST',
-    body: { author, title, url },
+    body: { author, title, url, likes },
     headers: {
       Authorization: `bearer ${
         JSON.parse(localStorage.getItem('loggedBlogAppUser')).token
       }`,
     },
   });
-  cy.visit('');
 });

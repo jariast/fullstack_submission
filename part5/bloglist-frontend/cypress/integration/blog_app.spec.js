@@ -53,6 +53,7 @@ describe('Blog App', function () {
           title: 'New Title',
           url: 'newUrl.com',
         });
+        cy.visit('');
       });
 
       it('User can like a blog', function () {
@@ -107,6 +108,38 @@ describe('Blog App', function () {
         cy.get('@removeBtn').click();
         cy.contains('Error');
         cy.contains('Blog of another user -- By: Random Author');
+      });
+    });
+
+    describe('And several blogs exist', function () {
+      beforeEach(function () {
+        cy.createBlog({
+          author: 'New Author',
+          title: 'Blog with 5 likes',
+          url: 'newUrl.com',
+          likes: 5,
+        });
+        cy.createBlog({
+          author: 'New Author',
+          title: 'Blog with 10 likes',
+          url: 'newUrl.com',
+          likes: 10,
+        });
+        cy.createBlog({
+          author: 'New Author',
+          title: 'Blog with 0 likes',
+          url: 'newUrl.com',
+          likes: 0,
+        });
+        cy.visit('');
+      });
+
+      it.only('Should order the blogs in ascending order by number of likes', function () {
+        cy.get('li.blog').then((elements) => {
+          expect(elements[0]).to.contain('Blog with 10 likes');
+          expect(elements[1]).to.contain('Blog with 5 likes');
+          expect(elements[2]).to.contain('Blog with 0 likes');
+        });
       });
     });
   });

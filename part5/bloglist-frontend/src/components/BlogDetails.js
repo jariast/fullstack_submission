@@ -17,7 +17,9 @@ const BlogDetails = ({ blog, likeClickHandler, removeClickHandler }) => (
     </div>
 
     <p>User: {blog.user.name}</p>
-    <button onClick={() => removeClickHandler(blog)}>Remove</button>
+    <button data-cy="remove-btn" onClick={() => removeClickHandler(blog)}>
+      Remove
+    </button>
   </div>
 );
 

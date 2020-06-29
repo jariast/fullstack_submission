@@ -46,7 +46,7 @@ describe('Blog App', function () {
       cy.get('[data-cy=toast-header]').contains('Success');
     });
 
-    describe('And a note exists', function () {
+    describe('And a blog exists', function () {
       beforeEach(function () {
         cy.createBlog({
           author: 'New Author',
@@ -55,11 +55,58 @@ describe('Blog App', function () {
         });
       });
 
-      it.only('User can like a blog', function () {
+      it('User can like a blog', function () {
         cy.get('[data-cy=view-details-btn]').click();
         cy.get('[data-cy=view-details-btn]').should('contain.text', 'Hide');
         cy.get('[data-cy=like-btn]').click();
         cy.get('[data-testid=blog-details]').contains('Likes: 1');
+      });
+
+      it('User can delete own blog', function () {
+        cy.contains('New Title -- By: New Author');
+        cy.get('[data-cy=view-details-btn]').click();
+        cy.get('[data-cy=remove-btn]').click();
+        cy.contains('New Title -- By: New Author').should('not.exist');
+      });
+
+      // eslint-disable-next-line quotes
+      it("User CAN NOT delete another user's blog", function () {
+        let otherUserId;
+        const user = {
+          username: 'romila',
+          name: 'Ana Romila',
+          password: '789012',
+        };
+        cy.request('POST', `${BASE_API_URL}/users`, user).then(({ body }) => {
+          otherUserId = body.id;
+          expect(body).to.have.property('id');
+          console.log('Body: ', body);
+          const newBlogObj = {
+            author: 'Random Author',
+            title: 'Blog of another user',
+            url: 'randomUrl1.com',
+            userId: otherUserId,
+          };
+          cy.request(
+            'POST',
+            `${BASE_API_URL}/testing/createBlogWithRandomUserId`,
+            newBlogObj
+          );
+          cy.visit('');
+        });
+
+        cy.contains('Blog of another user -- By: Random Author')
+          .parent()
+          .find('[data-cy=view-details-btn]')
+          .as('viewBtn');
+        cy.get('@viewBtn').click();
+        cy.contains('Blog of another user -- By: Random Author')
+          .parent()
+          .get('[data-cy=remove-btn]')
+          .as('removeBtn');
+        cy.get('@removeBtn').click();
+        cy.contains('Error');
+        cy.contains('Blog of another user -- By: Random Author');
       });
     });
   });

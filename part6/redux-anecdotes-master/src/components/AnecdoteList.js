@@ -6,7 +6,9 @@ import { setMessage, clearMsg } from '../reducers/notificationReducer';
 
 const AnecdoteList = () => {
   const anecdotes = useSelector((state) =>
-    state.anecdotes.sort((a, b) => b.votes - a.votes)
+    state.anecdotes
+      .filter((a) => a.content.toLowerCase().includes(state.filter))
+      .sort((a, b) => b.votes - a.votes)
   );
   const dispatch = useDispatch();
 
